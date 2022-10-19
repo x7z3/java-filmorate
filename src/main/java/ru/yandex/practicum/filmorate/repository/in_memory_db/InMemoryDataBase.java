@@ -15,10 +15,10 @@ public class InMemoryDataBase<T extends IdElement> {
     private final Map<Integer, T> storage = new HashMap<>();
 
     public void add(T t) {
-        log.info("adding a data entity to the in memory storage: {}", t);
         shouldNotExist(t);
         int nextId = idGenerator.getNextId();
         t.setId(nextId);
+        log.info("adding a data entity to the in memory storage: {}", t);
         storage.put(nextId, t);
     }
 
