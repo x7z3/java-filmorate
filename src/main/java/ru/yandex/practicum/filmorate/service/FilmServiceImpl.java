@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.repository.LikesRepository;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -64,6 +65,7 @@ public class FilmServiceImpl implements FilmService {
         List<Film> popular = likesRepository.getPopular(count);
         if (popular.isEmpty()) {
             log.warn("no films have liked before");
+            return getAllFilms().stream().limit(count).collect(Collectors.toList());
         }
         return popular;
     }
