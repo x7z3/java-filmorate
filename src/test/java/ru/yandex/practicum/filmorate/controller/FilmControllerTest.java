@@ -491,7 +491,7 @@ class FilmControllerTest {
         });
 
         assertNotNull(popularFilms);
-        assertEquals(0, popularFilms.size());
+        assertEquals(3, popularFilms.size());
 
         mockMvc.perform(put("/films/3/like/1")).andExpect(status().isOk());
         mockMvc.perform(put("/films/3/like/2")).andExpect(status().isOk());
@@ -684,7 +684,7 @@ class FilmControllerTest {
         });
 
         assertNotNull(popularFilms);
-        assertEquals(0, popularFilms.size());
+        assertEquals(3, popularFilms.size());
     }
 
     @Test
