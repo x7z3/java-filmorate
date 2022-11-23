@@ -30,8 +30,8 @@ REST API сервис рейтинга фильмов
 
 -- добавление нового фильма
 INSERT
-INTO film
-VALUES (1, 'film name', 'film description', '1970-01-01', 180, 1, 1);
+INTO film (film.name, film.descrioption, film.release_date, film.duration, film.mpa_rating_id)
+VALUES ('film name', 'film description', '1970-01-01', 180, 1);
 
 -- обновление фильма
 UPDATE film
@@ -51,8 +51,8 @@ WHERE film.film_id = 1;
 
 -- добавление нового пользователя
 INSERT
-INTO user
-VALUES (1, 'user@mail.ru', 'user_login', 'John', '1970-01-01');
+INTO user (user.email, user.login, user.name, user.birthday)
+VALUES ('user@mail.ru', 'user_login', 'John', '1970-01-01');
 
 -- обновление пользователя
 UPDATE user
