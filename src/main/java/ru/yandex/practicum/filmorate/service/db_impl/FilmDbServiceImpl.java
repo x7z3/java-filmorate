@@ -1,44 +1,44 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.service.db_impl;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.FilmRepository;
 import ru.yandex.practicum.filmorate.repository.LikesRepository;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
+@Profile("db_h2")
 @Service
-public class FilmServiceImpl implements FilmService {
+public class FilmDbServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
-    private final UserRepository userRepository;
     private final LikesRepository likesRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FilmServiceImpl(FilmRepository filmRepository, UserRepository userRepository, LikesRepository likesRepository) {
+    public FilmDbServiceImpl(
+            FilmRepository filmRepository,
+            LikesRepository likesRepository,
+            UserRepository userRepository
+    ) {
         this.filmRepository = filmRepository;
-        this.userRepository = userRepository;
         this.likesRepository = likesRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public void addFilm(Film film) {
-        filmRepository.addFilm(film);
+    public Film addFilm(Film film) {
+        return filmRepository.addFilm(film);
     }
 
     @Override
-    public void updateFilm(Film film) {
-        filmRepository.updateFilm(film);
-    }
-
-    @Override
-    public Film getFilm(Integer id) {
-        return filmRepository.getFilm(id);
+    public Film updateFilm(Film film) {
+        return filmRepository.updateFilm(film);
     }
 
     @Override
@@ -63,10 +63,12 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<Film> getPopularFilms(Integer count) {
         List<Film> popular = likesRepository.getPopular(count);
-        if (popular.isEmpty()) {
-            log.warn("no films have liked before");
-            return getAllFilms().stream().limit(count).collect(Collectors.toList());
-        }
+        if (popular.isEmpty()) return getAllFilms().stream().limit(count).collect(Collectors.toList());
         return popular;
+    }
+
+    @Override
+    public Film getFilm(Integer id) {
+        return filmRepository.getFilm(id);
     }
 }

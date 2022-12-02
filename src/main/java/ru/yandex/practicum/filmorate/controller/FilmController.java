@@ -13,20 +13,19 @@ import java.util.Optional;
 public class FilmController {
     private final FilmService filmService;
 
-    public FilmController(@Autowired FilmService filmService) {
+    @Autowired
+    public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
     @PostMapping("/films")
     public Film addFilm(@Valid @RequestBody Film film) {
-        filmService.addFilm(film);
-        return film;
+        return filmService.addFilm(film);
     }
 
     @PutMapping("/films")
     public Film updateFilm(@Valid @RequestBody Film film) {
-        filmService.updateFilm(film);
-        return film;
+        return filmService.updateFilm(film);
     }
 
     @GetMapping("/films/{id}")

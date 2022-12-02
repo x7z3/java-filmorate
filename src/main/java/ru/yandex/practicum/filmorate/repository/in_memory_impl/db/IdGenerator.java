@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.repository.in_memory_db;
+package ru.yandex.practicum.filmorate.repository.in_memory_impl.db;
 
 import lombok.Getter;
 import lombok.Setter;

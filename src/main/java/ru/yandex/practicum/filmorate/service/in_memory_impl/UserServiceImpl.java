@@ -1,34 +1,41 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.service.in_memory_impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.FriendsRepository;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.ValidationException;
 import java.util.List;
 
 @Slf4j
+@Profile("in_memory")
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final FriendsRepository friendsRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, FriendsRepository friendsRepository) {
+    public UserServiceImpl(
+            UserRepository userRepository,
+            @Qualifier("inMemoryFriendsRepository") FriendsRepository friendsRepository
+    ) {
         this.userRepository = userRepository;
         this.friendsRepository = friendsRepository;
     }
 
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             log.warn("user's name is blank/empty");
             user.setName(user.getLogin());
         }
-        userRepository.addUser(user);
+        return userRepository.addUser(user);
     }
 
     @Override

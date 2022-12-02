@@ -1,14 +1,17 @@
-package ru.yandex.practicum.filmorate.repository;
+package ru.yandex.practicum.filmorate.repository.in_memory_impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exception.RecordNotFoundException;
 import ru.yandex.practicum.filmorate.model.Friends;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.repository.FriendsRepository;
 
 import java.util.*;
 
 @Slf4j
+@Profile("in_memory")
 @Repository
 public class InMemoryFriendsRepository implements FriendsRepository {
     private final Map<User, Friends> friendsBase = new HashMap<>();

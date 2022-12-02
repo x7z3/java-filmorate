@@ -1,16 +1,19 @@
-package ru.yandex.practicum.filmorate.repository;
+package ru.yandex.practicum.filmorate.repository.in_memory_impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exception.RecordNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Likes;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.repository.LikesRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Profile("in_memory")
 @Repository
 public class InMemoryLikesRepository implements LikesRepository {
     private final Map<Film, Likes> likesBase = new HashMap<>();

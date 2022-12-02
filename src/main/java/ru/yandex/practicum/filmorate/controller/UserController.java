@@ -12,14 +12,14 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    public UserController(@Autowired UserService userService) {
+    @Autowired
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/users")
     public User createUser(@Valid @RequestBody User user) {
-        userService.createUser(user);
-        return user;
+        return userService.createUser(user);
     }
 
     @PutMapping("/users")
