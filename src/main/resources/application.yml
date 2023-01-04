@@ -1,3 +1,20 @@
 server:
   error:
     include-stacktrace: never
+spring:
+  profiles:
+    active:
+      - db_h2
+  datasource:
+    url: jdbc:h2:file:./db/filmorate
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

@@ -1,11 +1,14 @@
-package ru.yandex.practicum.filmorate.repository;
+package ru.yandex.practicum.filmorate.repository.in_memory_impl;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.repository.in_memory_db.InMemoryDataBase;
+import ru.yandex.practicum.filmorate.repository.UserRepository;
+import ru.yandex.practicum.filmorate.repository.in_memory_impl.db.InMemoryDataBase;
 
 import java.util.List;
 
+@Profile("in_memory")
 @Repository
 public class InMemoryUserRepository extends InMemoryDataBase<User> implements UserRepository {
     @Override
@@ -14,8 +17,9 @@ public class InMemoryUserRepository extends InMemoryDataBase<User> implements Us
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         super.add(user);
+        return user;
     }
 
     @Override

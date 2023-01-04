@@ -4,9 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.yandex.practicum.filmorate.Configuration;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.FriendsRepository;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
@@ -20,8 +24,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ContextConfiguration(classes = Configuration.class)
+@Sql({"classpath:schema.sql", "classpath:data.sql"})
+@AutoConfigureTestDatabase
 @WebMvcTest(controllers = {
-        UserController.class, UserService.class, UserRepository.class, FriendsRepository.class, UserRepository.class
+        UserController.class,
+        UserService.class,
+        UserRepository.class,
+        FriendsRepository.class,
+        UserRepository.class
 })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class UserControllerTest {
@@ -157,7 +168,7 @@ class UserControllerTest {
 
         assertNotNull(users);
         assertEquals(1, users.size());
-        assertEquals("login1", users.get(0).getName());
+        assertEquals("login1", users.get(0).getLogin());
     }
 
     @Test

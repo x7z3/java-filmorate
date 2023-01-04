@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.repository.in_memory_db;
+package ru.yandex.practicum.filmorate.repository.in_memory_impl.db;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exception.RecordAlreadyExistException;
@@ -28,11 +28,12 @@ public class InMemoryDataBase<T extends IdElement> {
         return storage.get(id);
     }
 
-    public void update(T t) {
+    public T update(T t) {
         log.info("updating a data entity in the in memory storage to the next entity: {}", t);
         int id = t.getId();
         shouldExist(id);
         storage.put(id, t);
+        return t;
     }
 
     public void remove(Integer id) {

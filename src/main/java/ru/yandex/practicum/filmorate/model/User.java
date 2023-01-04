@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.yandex.practicum.filmorate.repository.in_memory_db.IdElement;
+import ru.yandex.practicum.filmorate.repository.in_memory_impl.db.IdElement;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
